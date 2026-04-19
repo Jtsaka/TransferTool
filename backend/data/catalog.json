@@ -1,0 +1,56 @@
+{
+  "default_from_institution": "College of San Mateo",
+  "from_institutions": [
+    "College of San Mateo",
+    "Cañada College",
+    "Skyline College",
+    "De Anza College",
+    "Foothill College"
+  ],
+  "schools": [
+    "UC Berkeley",
+    "UCLA",
+    "UC San Diego",
+    "UC Davis",
+    "UC Irvine",
+    "UC Santa Barbara",
+    "UC Santa Cruz",
+    "UC Riverside",
+    "UC Merced",
+    "San Jose State University",
+    "San Francisco State University",
+    "Cal Poly San Luis Obispo",
+    "USC",
+    "Stanford University"
+  ],
+  "majors": [
+    "Computer Science",
+    "Computer Engineering",
+    "Data Science",
+    "Electrical Engineering",
+    "Mechanical Engineering",
+    "Biology",
+    "Chemistry",
+    "Physics",
+    "Mathematics",
+    "Economics",
+    "Business Administration",
+    "Psychology",
+    "Political Science",
+    "English",
+    "History",
+    "Music Performance",
+    "Theater Arts",
+    "Dance",
+    "Art Practice",
+    "Architecture",
+    "Nursing",
+    "Film and Media Studies"
+  ],
+  "terms": [
+    "Fall 2026",
+    "Spring 2027",
+    "Fall 2027",
+    "Spring 2028"
+  ]
+}
