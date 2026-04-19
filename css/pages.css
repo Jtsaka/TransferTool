@@ -1,0 +1,33 @@
+.hero {
+  display: grid;
+  grid-template-columns: 150px 1fr 200px;
+  align-items: center;
+  padding: 60px 0;
+  gap: 20px;
+}
+
+.hero__icon {
+  width: 150px;
+}
+
+.hero__title {
+  text-align: center;
+  font-size: 4rem;
+  color: var(--blue);
+}
+
+.hero__club {
+  background: #e6dfd4;
+  padding: 30px;
+  border-radius: var(--radius);
+  text-align: center;
+  font-weight: bold;
+}
+
+@media (max-width: 800px) {
+  .hero {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 20px;
+  }
+}

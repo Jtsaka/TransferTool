@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Compass - AP Scores</title>
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+</head>
+<body>
+  <header class="navbar">
+    <a href="index.html" class="navbar__brand">
+        <img src="assets/logo.png" alt="Compass logo" class="navbar__logo" />
+        <span class="navbar__title">Compass</span>
+    </a>
+
+    <nav class="navbar__links">
+      <a href="ap-scores.html">AP Scores</a>
+      <a href="deadlines.html">Deadlines</a>
+      <a href="courses.html">Courses</a>
+    </nav>
+  </header>
+
+  <main class="page">
+    <div class="container stack-lg">
+      <section class="card">
+        <div class="grid-2">
+          <select class="select">
+            <option>Select School/University</option>
+            <option>UC Berkeley</option>
+            <option>UCLA</option>
+            <option>UC Irvine</option>
+          </select>
+
+          <select class="select">
+            <option>Select Major</option>
+            <option>Computer Science</option>
+            <option>Data Science</option>
+            <option>Computer Engineering</option>
+          </select>
+        </div>
+      </section>
+
+      <section class="table-wrapper">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>AP</th>
+              <th>Minimum Score Accepted</th>
+              <th>IGETC</th>
+              <th>CSU GE</th>
+              <th>School</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Art History</td>
+              <td>3</td>
+              <td>3A, 3B</td>
+              <td>C1, C2</td>
+              <td>UC Berkeley</td>
+            </tr>
+            <tr>
+              <td>Biology</td>
+              <td>3</td>
+              <td>5B, 5C</td>
+              <td>B2, B3</td>
+              <td>UC Berkeley</td>
+            </tr>
+            <tr>
+              <td>Calculus AB</td>
+              <td>3</td>
+              <td>-</td>
+              <td>-</td>
+              <td>Math 1A</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

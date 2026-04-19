@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Compass - Deadlines</title>
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+</head>
+<body>
+  <header class="navbar">
+    <a href="index.html" class="navbar__brand">
+        <img src="assets/logo.png" alt="Compass logo" class="navbar__logo" />
+        <span class="navbar__title">Compass</span>
+    </a>
+
+    <nav class="navbar__links">
+      <a href="ap-scores.html">AP Scores</a>
+      <a href="deadlines.html">Deadlines</a>
+      <a href="courses.html">Courses</a>
+    </nav>
+  </header>
+
+  <main class="page">
+    <div class="container stack-lg">
+      <section class="card">
+        <div class="form-row">
+          <select class="select">
+            <option>School/University</option>
+          </select>
+
+          <select class="select">
+            <option>Major</option>
+          </select>
+
+          <select class="select">
+            <option>Season, Year</option>
+          </select>
+
+          <button class="btn btn--full">Add to list</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2 class="card__title">Your List</h2>
+
+        <div class="table-wrapper">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>School</th>
+                <th>Major</th>
+                <th>Deadline</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>UC Berkeley</td>
+                <td>Computer Science</td>
+                <td>November 30 2026</td>
+                <td><button class="delete-btn">x</button></td>
+              </tr>
+              <tr>
+                <td>UC Davis</td>
+                <td>Computer Science</td>
+                <td>November 30 2026</td>
+                <td><button class="delete-btn">x</button></td>
+              </tr>
+              <tr>
+                <td>USC</td>
+                <td>Computer Science</td>
+                <td>November 30 2026</td>
+                <td><button class="delete-btn">x</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

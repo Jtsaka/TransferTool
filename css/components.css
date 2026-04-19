@@ -1,0 +1,140 @@
+/* NAVBAR */
+.navbar {
+  background: var(--blue);
+  color: var(--white);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 32px;
+}
+
+.navbar__brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  text-decoration: none;
+  color: white;
+}
+
+.navbar__logo {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+.navbar__title {
+  font-size: 1.7rem;
+  font-weight: 700;
+}
+
+.navbar__links {
+  display: flex;
+  gap: 28px;
+}
+
+.navbar__links a {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+/* CARD */
+.card {
+  background: var(--card);
+  border-radius: var(--radius-md);
+  padding: 22px;
+  box-shadow: var(--shadow-sm);
+}
+
+.card__title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0 0 18px;
+}
+
+/* FORM */
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.select,
+.input {
+  width: 100%;
+  padding: 14px 16px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--cream);
+  color: var(--text);
+}
+
+.btn {
+  display: inline-block;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 12px 24px;
+  background: var(--white);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn--full {
+  width: 100%;
+}
+
+/* TABLE */
+.table-wrapper {
+  background: var(--table-bg);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table thead {
+  background: transparent;
+}
+
+.table th,
+.table td {
+  text-align: left;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--green-line);
+  font-size: 0.95rem;
+}
+
+.table th {
+  font-weight: 700;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* PILLS */
+.pill-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.pill {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: #e8dff3;
+}
+
+/* DELETE */
+.delete-btn {
+  color: var(--danger);
+  font-weight: bold;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
