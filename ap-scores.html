@@ -26,19 +26,19 @@
     <div class="container stack-lg">
       <section class="card">
         <div class="grid-2">
-          <select class="select">
-            <option>Select School/University</option>
-            <option>UC Berkeley</option>
-            <option>UCLA</option>
-            <option>UC Irvine</option>
+          <select class="select" data-role="school-select">
+            <option value="">Select School/University</option>
           </select>
 
-          <select class="select">
-            <option>Select Major</option>
-            <option>Computer Science</option>
-            <option>Data Science</option>
-            <option>Computer Engineering</option>
+          <select class="select" data-role="major-select">
+            <option value="">Select Major</option>
           </select>
+        </div>
+
+        <div class="form-row" style="flex-direction:row; gap:12px; margin-top:12px;">
+          <button class="btn" data-role="lookup-btn">Look up</button>
+          <button class="btn" data-role="refresh-btn">Force refresh</button>
+          <span class="muted" data-role="ap-status"></span>
         </div>
       </section>
 
@@ -46,39 +46,27 @@
         <table class="table">
           <thead>
             <tr>
-              <th>AP</th>
-              <th>Minimum Score Accepted</th>
-              <th>IGETC</th>
-              <th>CSU GE</th>
+              <th>AP Subject</th>
+              <th>Score Accepted</th>
+              <th>Units</th>
+              <th>Course / Requirement</th>
               <th>School</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>Art History</td>
-              <td>3</td>
-              <td>3A, 3B</td>
-              <td>C1, C2</td>
-              <td>UC Berkeley</td>
-            </tr>
-            <tr>
-              <td>Biology</td>
-              <td>3</td>
-              <td>5B, 5C</td>
-              <td>B2, B3</td>
-              <td>UC Berkeley</td>
-            </tr>
-            <tr>
-              <td>Calculus AB</td>
-              <td>3</td>
-              <td>-</td>
-              <td>-</td>
-              <td>Math 1A</td>
-            </tr>
+          <tbody data-role="ap-tbody">
+            <tr><td colspan="5" class="muted">Pick a school and major above to load AP credit policy.</td></tr>
           </tbody>
         </table>
       </section>
+
+      <section class="card">
+        <h2 class="card__title">Notes</h2>
+        <p data-role="ap-notes" class="muted">No notes loaded yet.</p>
+      </section>
     </div>
   </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/ap-scores.js"></script>
 </body>
 </html>
