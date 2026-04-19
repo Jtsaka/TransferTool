@@ -55,14 +55,26 @@ class FirestoreStore:
         try:
             if not firebase_admin._apps:
                 cred = self._build_credentials(credentials)
-                if cred is None:
-                    logger.warning(
-                        "No Firebase credentials configured; falling back to local cache."
-                    )
-                    return
                 options: dict[str, Any] = {}
                 if config.FIREBASE_PROJECT_ID:
                     options["projectId"] = config.FIREBASE_PROJECT_ID
+                if cred is None:
+                    # No explicit credentials: try Application Default
+                    # Credentials. This is how Cloud Run authenticates when
+                    # the service is bound to a service account, and it also
+                    # picks up GOOGLE_APPLICATION_CREDENTIALS automatically.
+                    try:
+                        cred = credentials.ApplicationDefault()
+                        logger.info(
+                            "Using Application Default Credentials for Firestore."
+                        )
+                    except Exception as exc:
+                        logger.warning(
+                            "No Firebase credentials configured and ADC not "
+                            "available (%s); falling back to local cache.",
+                            exc,
+                        )
+                        return
                 firebase_admin.initialize_app(cred, options or None)
             self._client = firestore.client()
             logger.info("Firestore client initialized.")

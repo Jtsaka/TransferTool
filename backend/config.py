@@ -16,7 +16,8 @@ class Config:
     FIREBASE_PROJECT_ID: str | None = os.getenv("FIREBASE_PROJECT_ID")
 
     FLASK_HOST: str = os.getenv("FLASK_HOST", "0.0.0.0")
-    FLASK_PORT: int = int(os.getenv("FLASK_PORT", "5000"))
+    # Cloud Run injects a PORT env var that the container must bind to.
+    FLASK_PORT: int = int(os.getenv("PORT") or os.getenv("FLASK_PORT") or "5000")
     FLASK_DEBUG: bool = os.getenv("FLASK_DEBUG", "0") in {"1", "true", "True"}
 
     DEFAULT_FROM_INSTITUTION: str = os.getenv(
