@@ -26,19 +26,20 @@
     <div class="container stack-lg">
       <section class="card">
         <div class="form-row">
-          <select class="select">
-            <option>School/University</option>
+          <select class="select" data-role="school-select">
+            <option value="">School/University</option>
           </select>
 
-          <select class="select">
-            <option>Major</option>
+          <select class="select" data-role="major-select">
+            <option value="">Major</option>
           </select>
 
-          <select class="select">
-            <option>Season, Year</option>
+          <select class="select" data-role="term-select">
+            <option value="">Season, Year</option>
           </select>
 
-          <button class="btn btn--full">Add to list</button>
+          <button class="btn btn--full" data-role="add-btn">Add to list</button>
+          <span class="muted" data-role="deadline-status"></span>
         </div>
       </section>
 
@@ -51,34 +52,19 @@
               <tr>
                 <th>School</th>
                 <th>Major</th>
+                <th>Term</th>
                 <th>Deadline</th>
                 <th></th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>UC Berkeley</td>
-                <td>Computer Science</td>
-                <td>November 30 2026</td>
-                <td><button class="delete-btn">x</button></td>
-              </tr>
-              <tr>
-                <td>UC Davis</td>
-                <td>Computer Science</td>
-                <td>November 30 2026</td>
-                <td><button class="delete-btn">x</button></td>
-              </tr>
-              <tr>
-                <td>USC</td>
-                <td>Computer Science</td>
-                <td>November 30 2026</td>
-                <td><button class="delete-btn">x</button></td>
-              </tr>
-            </tbody>
+            <tbody data-role="deadline-tbody"></tbody>
           </table>
         </div>
       </section>
     </div>
   </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/deadlines.js"></script>
 </body>
 </html>

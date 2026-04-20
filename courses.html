@@ -29,8 +29,21 @@
           <h2 class="card__title" style="margin:0;">Courses by Priority</h2>
           <div>
             <strong># of Campuses</strong>
-            <span style="margin-left:8px;">6</span>
+            <span style="margin-left:8px;" data-role="campus-count">0</span>
           </div>
+        </div>
+
+        <p class="muted">
+          Showing courses from
+          <strong data-role="from-institution">College of San Mateo</strong>
+          that are transferable and required across the schools/majors you saved
+          on the Deadlines page. Higher-priority courses count toward more
+          schools.
+        </p>
+
+        <div class="form-row" style="flex-direction:row; gap:12px; margin: 12px 0;">
+          <button class="btn" data-role="refresh-btn">Force refresh</button>
+          <span class="muted" data-role="overlap-status"></span>
         </div>
 
         <div class="table-wrapper">
@@ -43,35 +56,14 @@
                 <th>Schools</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>Math 54</td>
-                <td>Linear Algebra and Calculus</td>
-                <td>
-                  <div class="pill-group">
-                    <span class="pill">Comp Sci</span>
-                    <span class="pill">Engineering</span>
-                    <span class="pill">Data Sci</span>
-                  </div>
-                </td>
-                <td>6</td>
-              </tr>
-              <tr>
-                <td>Math 54L</td>
-                <td>Linear Algebra Lab</td>
-                <td>
-                  <div class="pill-group">
-                    <span class="pill">Comp Sci</span>
-                    <span class="pill">Engineering</span>
-                  </div>
-                </td>
-                <td>4</td>
-              </tr>
-            </tbody>
+            <tbody data-role="overlap-tbody"></tbody>
           </table>
         </div>
       </section>
     </div>
   </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/courses.js"></script>
 </body>
 </html>

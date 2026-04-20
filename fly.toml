@@ -1,0 +1,45 @@
+# Fly.io configuration for Compass.
+#
+# Edit `app` below to match the globally-unique app name you picked in
+# `fly launch` (e.g. "compass-yourlastname" or "transfertool"). Everything
+# else here is sane defaults you can tweak later from the dashboard or by
+# re-running `fly deploy`.
+
+app = "compass"  # <-- change this to your Fly app name before deploying
+primary_region = "sjc"  # San Jose — close to Bay Area users / CSM
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  PORT = "8080"
+  DEFAULT_FROM_INSTITUTION = "College of San Mateo"
+  # GEMINI_API_KEY and FIREBASE_CREDENTIALS_JSON are set as secrets, not env
+  # vars; see docs/DEPLOY_FLY_IO.md.
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]
+
+  [http_service.concurrency]
+    type = "requests"
+    soft_limit = 25
+    hard_limit = 50
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "512mb"
+
+[checks]
+  [checks.health]
+    type = "http"
+    port = 8080
+    path = "/api/health"
+    interval = "30s"
+    timeout = "5s"
+    grace_period = "10s"
+    method = "GET"

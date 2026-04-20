@@ -43,3 +43,8 @@ input,
 select {
   font: inherit;
 }
+
+.muted {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
