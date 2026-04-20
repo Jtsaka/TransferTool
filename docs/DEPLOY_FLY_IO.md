@@ -98,17 +98,23 @@ fly secrets set GEMINI_API_KEY="your-gemini-key-here"
 
 ### Firebase credentials
 
-The cleanest way is to read the JSON file you downloaded in step 3 and
-pass its contents as a single env var:
+The service-account JSON contains real newlines, and PowerShell will
+split it on those newlines if you try to pass it directly as an
+argument (you'll see `Error: could not parse secrets: 'PRIVATE': must
+be in the format NAME=VALUE`). The reliable way is to compress the
+JSON to a single line and pipe it to `fly secrets import`:
 
 ```powershell
-$json = Get-Content -Raw "C:\Users\YOU\Documents\compass-firebase.json"
-fly secrets set FIREBASE_CREDENTIALS_JSON="$json"
+$json = (Get-Content -Raw "C:\Users\YOU\Documents\compass-firebase.json") | ConvertFrom-Json | ConvertTo-Json -Compress
+"FIREBASE_CREDENTIALS_JSON=$json" | fly secrets import
 ```
 
-The backend already supports both `FIREBASE_CREDENTIALS` (a file path)
-and `FIREBASE_CREDENTIALS_JSON` (the raw JSON value) — we use the JSON
-form here because secrets work better than mounted files on Fly.
+`fly secrets import` reads `KEY=VALUE` lines from stdin, which sidesteps
+the PowerShell argument-splitting issue entirely.
+
+The backend supports both `FIREBASE_CREDENTIALS` (a file path) and
+`FIREBASE_CREDENTIALS_JSON` (the raw JSON value) — we use the JSON form
+here because secrets work better than mounted files on Fly.
 
 ### (Optional) project id
 
@@ -200,6 +206,7 @@ applies it; if you change a secret, the redeploy is automatic.
 | `fly: command not found` after install | Open a fresh PowerShell window, or add `C:\Users\YOU\.fly\bin` to PATH manually. |
 | Health check failing on first deploy | Hit `fly logs` — usually a missing secret. Check `fly secrets list`. |
 | `firestore_remote: false` on `/api/health` | `FIREBASE_CREDENTIALS_JSON` not set or invalid. Re-run step 5; the JSON must be the full file content, not just the key. |
+| `Error: could not parse secrets: 'PRIVATE': must be in the format NAME=VALUE` when setting the Firebase secret | PowerShell split the multi-line JSON into separate args. Use the `ConvertTo-Json -Compress` + `fly secrets import` form shown in step 5. |
 | `gemini_ready: false` | `GEMINI_API_KEY` not set. `fly secrets set GEMINI_API_KEY="..."`. |
 | `503` from `/api/ap-scores` even though Gemini key is set | Almost always means the secret rollout hasn't completed. Run `fly status` and check the latest release. |
 | Local cache file behavior is weird in production | Don't rely on the local-file cache on Fly — it lives inside the VM and gets wiped on every deploy. Set `FIREBASE_CREDENTIALS_JSON` so Firestore is the cache. |
