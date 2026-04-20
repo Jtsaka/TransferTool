@@ -98,19 +98,32 @@ fly secrets set GEMINI_API_KEY="your-gemini-key-here"
 
 ### Firebase credentials
 
-The service-account JSON contains real newlines, and PowerShell will
-split it on those newlines if you try to pass it directly as an
-argument (you'll see `Error: could not parse secrets: 'PRIVATE': must
-be in the format NAME=VALUE`). The reliable way is to compress the
-JSON to a single line and pipe it to `fly secrets import`:
+The service-account JSON contains real newlines. If you `Get-Content
+-Raw` it and pass `"$json"` directly to `fly secrets set`, PowerShell
+splits on those newlines and flyctl errors with
+`could not parse secrets: 'PRIVATE': must be in the format NAME=VALUE`.
+
+The trick is to compress the JSON to a single line first:
 
 ```powershell
 $json = (Get-Content -Raw "C:\Users\YOU\Documents\compass-firebase.json") | ConvertFrom-Json | ConvertTo-Json -Compress
-"FIREBASE_CREDENTIALS_JSON=$json" | fly secrets import
+fly secrets set "FIREBASE_CREDENTIALS_JSON=$json"
 ```
 
-`fly secrets import` reads `KEY=VALUE` lines from stdin, which sidesteps
-the PowerShell argument-splitting issue entirely.
+> ⚠️ **Don't pipe to `fly secrets import` from Windows PowerShell 5.1.**
+> The pipe prepends a UTF-8 BOM (`\ufeff`) to the first byte, and flyctl
+> rejects `\ufeffFIREBASE_CREDENTIALS_JSON` as an invalid secret name.
+> The `fly secrets set` form above sidesteps that entirely.
+
+If for some reason `fly secrets set` complains about special chars,
+write to a BOM-less file and import that:
+
+```powershell
+$line = "FIREBASE_CREDENTIALS_JSON=$json"
+[System.IO.File]::WriteAllText("$PWD\secret.tmp", $line, (New-Object System.Text.UTF8Encoding $false))
+Get-Content -Raw secret.tmp | fly secrets import
+Remove-Item secret.tmp
+```
 
 The backend supports both `FIREBASE_CREDENTIALS` (a file path) and
 `FIREBASE_CREDENTIALS_JSON` (the raw JSON value) — we use the JSON form
@@ -206,7 +219,8 @@ applies it; if you change a secret, the redeploy is automatic.
 | `fly: command not found` after install | Open a fresh PowerShell window, or add `C:\Users\YOU\.fly\bin` to PATH manually. |
 | Health check failing on first deploy | Hit `fly logs` — usually a missing secret. Check `fly secrets list`. |
 | `firestore_remote: false` on `/api/health` | `FIREBASE_CREDENTIALS_JSON` not set or invalid. Re-run step 5; the JSON must be the full file content, not just the key. |
-| `Error: could not parse secrets: 'PRIVATE': must be in the format NAME=VALUE` when setting the Firebase secret | PowerShell split the multi-line JSON into separate args. Use the `ConvertTo-Json -Compress` + `fly secrets import` form shown in step 5. |
+| `Error: could not parse secrets: 'PRIVATE': must be in the format NAME=VALUE` when setting the Firebase secret | PowerShell split the multi-line JSON into separate args. Use the `ConvertTo-Json -Compress` + `fly secrets set "KEY=$value"` form shown in step 5. |
+| `"\ufeffFIREBASE_CREDENTIALS_JSON" is not a valid secret name` | Windows PowerShell 5.1 prepends a UTF-8 BOM when piping to external commands. Use `fly secrets set "KEY=$json"` (no pipe) instead of piping to `fly secrets import`. |
 | `gemini_ready: false` | `GEMINI_API_KEY` not set. `fly secrets set GEMINI_API_KEY="..."`. |
 | `503` from `/api/ap-scores` even though Gemini key is set | Almost always means the secret rollout hasn't completed. Run `fly status` and check the latest release. |
 | Local cache file behavior is weird in production | Don't rely on the local-file cache on Fly — it lives inside the VM and gets wiped on every deploy. Set `FIREBASE_CREDENTIALS_JSON` so Firestore is the cache. |
