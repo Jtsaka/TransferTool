@@ -1,10 +1,11 @@
 # Fly.io configuration for Compass.
 #
-# `app` will be replaced with whatever you pick in `fly launch` the first
-# time you deploy. Everything else here is sane defaults you can edit later
-# from the dashboard or by re-running `fly deploy`.
+# Edit `app` below to match the globally-unique app name you picked in
+# `fly launch` (e.g. "compass-yourlastname" or "transfertool"). Everything
+# else here is sane defaults you can tweak later from the dashboard or by
+# re-running `fly deploy`.
 
-app = "compass"
+app = "compass"  # <-- change this to your Fly app name before deploying
 primary_region = "sjc"  # San Jose — close to Bay Area users / CSM
 
 [build]

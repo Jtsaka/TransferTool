@@ -77,13 +77,22 @@ flyctl will:
 1. Notice the existing `fly.toml` and `Dockerfile`.
 2. Ask **"Would you like to copy its configuration to the new app?"** →
    say **Yes**.
-3. Ask you to pick an app name (must be globally unique on Fly — try
-   something like `compass-yourlastname`). The app name in `fly.toml`
-   gets updated automatically.
-4. Ask for a region — pick `sjc` (San Jose) or whatever's close to you.
-5. Skip the Postgres/Redis prompts — say **No** to both. Compass uses
+3. **IMPORTANT:** if flyctl asks `Overwrite '/path/to/Dockerfile'?` or
+   offers to "generate a new Dockerfile", answer **No** to every such
+   prompt. Flyctl's auto-generator substitutes `flask run` (the dev
+   server) for our gunicorn command and the deploy will crash-loop.
+4. Ask you to pick an app name (must be globally unique on Fly — try
+   something like `compass-yourlastname` or `transfertool`). Whatever
+   you pick, open `fly.toml` and update the `app = "..."` line to match
+   — flyctl doesn't always rewrite it reliably.
+5. Ask for a region — pick `sjc` (San Jose) or whatever's close to you.
+6. Skip the Postgres/Redis prompts — say **No** to both. Compass uses
    Firestore for storage.
-6. Skip "deploy now?" — we need to set secrets first. Say **No**.
+7. Skip "deploy now?" — we need to set secrets first. Say **No**.
+
+> If you see `Error: unauthorized` on deploy, the `app = "..."` value in
+> `fly.toml` doesn't match your actual Fly app name. Fix that line and
+> re-run `fly deploy`.
 
 ## 5. Set the secrets
 
@@ -217,6 +226,8 @@ applies it; if you change a secret, the redeploy is automatic.
 | Symptom | Likely cause |
 | --- | --- |
 | `fly: command not found` after install | Open a fresh PowerShell window, or add `C:\Users\YOU\.fly\bin` to PATH manually. |
+| `Error: unauthorized` on `fly deploy` | The `app = "..."` line in `fly.toml` doesn't match the app you actually created (you probably named it one thing during `fly launch` and the config says another). Edit `fly.toml` so `app` matches, then re-run. |
+| Logs show `flask run --host=0.0.0.0 --port=8080` + `Could not locate a Flask application` | Flyctl overwrote our Dockerfile/fly.toml during `fly launch`. Delete the local copies (`Remove-Item Dockerfile, fly.toml, .dockerignore, Procfile -Force -ErrorAction SilentlyContinue`), `git pull`, edit `app` in fly.toml to your app name, then `fly deploy`. |
 | Health check failing on first deploy | Hit `fly logs` — usually a missing secret. Check `fly secrets list`. |
 | `firestore_remote: false` on `/api/health` | `FIREBASE_CREDENTIALS_JSON` not set or invalid. Re-run step 5; the JSON must be the full file content, not just the key. |
 | `Error: could not parse secrets: 'PRIVATE': must be in the format NAME=VALUE` when setting the Firebase secret | PowerShell split the multi-line JSON into separate args. Use the `ConvertTo-Json -Compress` + `fly secrets set "KEY=$value"` form shown in step 5. |
