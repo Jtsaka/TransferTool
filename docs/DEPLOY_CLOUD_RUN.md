@@ -174,6 +174,22 @@ gcloud run services update compass \
   --update-secrets GEMINI_API_KEY=GEMINI_API_KEY:latest
 ```
 
+> ⚠️ **Windows / PowerShell gotcha.** The Unix `echo -n ... | gcloud secrets ...`
+> trick does not translate to PowerShell cleanly — piping a string to a
+> native command typically appends CRLF, which ends up inside the secret
+> value. The key will appear to load (`/api/health` reports
+> `gemini_ready: true`) but every actual model call fails with
+> `INTERNAL:Illegal header value` / `status = UNAVAILABLE, details = "Illegal metadata"`
+> because gRPC refuses HTTP/2 headers containing `\r` or `\n`. Use a
+> temp file instead:
+>
+> ```powershell
+> [System.IO.File]::WriteAllText("$env:TEMP\gkey.tmp", "your-key-here", [System.Text.Encoding]::ASCII)
+> gcloud secrets versions add GEMINI_API_KEY --data-file="$env:TEMP\gkey.tmp"
+> Remove-Item "$env:TEMP\gkey.tmp"
+> gcloud run services update compass --region=us-central1 --update-secrets GEMINI_API_KEY=GEMINI_API_KEY:latest
+> ```
+
 ### Custom domain (optional)
 
 ```bash
